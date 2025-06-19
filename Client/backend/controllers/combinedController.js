@@ -24,3 +24,34 @@ exports.createVendorWithProducts = async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 };
+
+// ✅ GET all vendors with products
+exports.getAllVendorProducts = async (req, res) => {
+  try {
+    const data = await Vendor.findAll({
+      include: [{ model: Product }]
+    });
+    res.status(200).json(data);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// ✅ GET vendor by ID with products
+exports.getVendorProductsById = async (req, res) => {
+  const vendorId = req.params.id;
+  try {
+    const vendor = await Vendor.findOne({
+      where: { vendorId },
+      include: [{ model: Product }]
+    });
+
+    if (!vendor) {
+      return res.status(404).json({ message: 'Vendor not found' });
+    }
+
+    res.status(200).json(vendor);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
