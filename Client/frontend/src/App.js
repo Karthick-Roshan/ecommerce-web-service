@@ -7,6 +7,7 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Auth from "./pages/Auth";
 
+
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
