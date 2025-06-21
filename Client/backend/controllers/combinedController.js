@@ -5,10 +5,8 @@ exports.createVendorWithProducts = async (req, res) => {
   const { vendor, products } = req.body;
 
   try {
-    // Insert or update vendor
     const [vendorRecord, created] = await Vendor.upsert(vendor);
 
-    // Insert multiple products
     const productRecords = await Promise.all(
       products.map(product =>
         Product.create({ ...product, vendorId: vendor.vendorId })
@@ -25,7 +23,6 @@ exports.createVendorWithProducts = async (req, res) => {
   }
 };
 
-// ✅ GET all vendors with products
 exports.getAllVendorProducts = async (req, res) => {
   try {
     const data = await Vendor.findAll({
@@ -37,7 +34,6 @@ exports.getAllVendorProducts = async (req, res) => {
   }
 };
 
-// ✅ GET vendor by ID with products
 exports.getVendorProductsById = async (req, res) => {
   const vendorId = req.params.id;
   try {
